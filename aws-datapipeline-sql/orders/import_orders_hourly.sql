@@ -11,9 +11,9 @@ select
 	b.customer_state,
 	b.customer_zip_code_prefix
 from 
-	ecommerce_db.orders a 
+	ecommerce.orders a 
 join 
-	ecommerce_db.customers b
+	ecommerce.customers b
 on 
 	a.customer_id = b.customer_id
 where 

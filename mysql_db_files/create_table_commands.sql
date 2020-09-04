@@ -59,7 +59,7 @@ CREATE TABLE orders (
   order_id varchar(32) NOT NULL,
   customer_id varchar(32) NOT NULL,
   order_status varchar(11) NOT NULL,
-  order_purchase_timestamp timestamp NULL DEFAULT NULL,
+  order_purchase_timestamp datetime NULL DEFAULT NULL,
   order_approved_at timestamp NULL DEFAULT NULL,
   order_delivered_carrier_date timestamp NULL DEFAULT NULL,
   order_delivered_customer_date timestamp NULL DEFAULT NULL,
