@@ -1,5 +1,5 @@
-copy mysql_dwh.orders from 's3://bucket-name/orders/historical/orders.csv'
-iam_role 'YOUR_ARN'
+copy mysql_dwh.orders from 's3://troy-de-course/orders/historical/orders.csv'
+iam_role 'arn:aws:iam::387932593219:role/myredshift'
 CSV QUOTE '\"' DELIMITER ','
 acceptinvchars;
 
