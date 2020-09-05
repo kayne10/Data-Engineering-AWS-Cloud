@@ -17,4 +17,4 @@ join
 on 
 	a.customer_id = b.customer_id
 where 
-	(a.order_purchase_timestamp BETWEEN '2018-10-17' - INTERVAL 180 DAY AND '2018-10-17')
+	(a.order_purchase_timestamp BETWEEN STR_TO_DATE("2018-10-17","%Y-%m-%d") - INTERVAL 180 DAY AND STR_TO_DATE("2018-10-17","%Y-%m-%d"))
