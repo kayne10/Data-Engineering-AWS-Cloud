@@ -4,8 +4,8 @@ CSV QUOTE '\"' DELIMITER ','
 acceptinvchars;
 
 
-copy mysql_dwh.order_items from 's3://bucket-name/order_items/historical/order_items.csv'
-iam_role 'YOUR_ARN'
+copy mysql_dwh.order_items from 's3://troy-de-course/order_items/historical/order_items.csv'
+iam_role 'arn:aws:iam::387932593219:role/myredshift'
 CSV QUOTE '\"' DELIMITER ','
 acceptinvchars;
 
