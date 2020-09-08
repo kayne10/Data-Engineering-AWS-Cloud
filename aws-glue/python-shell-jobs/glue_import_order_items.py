@@ -1,15 +1,12 @@
 import boto3,json 
 from pg import DB 
 
-secret_name = 'your-secret-name'
-region_name ='eu-west-1'
+secret_name = 'rs-credentials'
+region_name = 'us-west-2'
 
 session = boto3.session.Session()
-
 client = session.client(service_name='secretsmanager',region_name=region_name)
-
 get_secret_value_response = client.get_secret_value(SecretId=secret_name)
-
 creds = json.loads(get_secret_value_response['SecretString'])
 
 username = creds['username']
@@ -21,8 +18,8 @@ db = DB(dbname='dev',host=host,port=5439,user=username,passwd=password)
 merge_qry = """
 			begin ; 
 
-			copy mysql_dwh_staging.order_items from 's3://bucket_name/order_items/current/order_items.csv'
-			iam_role 'YOUR_ARN'
+			copy mysql_dwh_staging.order_items from 's3://troy-de-course/order_items/current/order_items.csv'
+			iam_role 'arn:aws:iam::387932593219:role/myredshift'
 			CSV QUOTE '\"' DELIMITER ','
 			acceptinvchars;
 
