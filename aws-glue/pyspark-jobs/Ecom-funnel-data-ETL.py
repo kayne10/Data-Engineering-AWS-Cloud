@@ -7,11 +7,11 @@ from awsglue.context import GlueContext
 from awsglue.job import Job
 import sys
 
-args = getResolvedOptions(sys.argv, ['TempDir','JOB_NAME'])
+#args = getResolvedOptions(sys.argv, ['TempDir','JOB_NAME'])
 
-#args = getResolvedOptions(sys.argv, ['TempDir','JOB_NAME','file_name'])
+args = getResolvedOptions(sys.argv, ['TempDir','JOB_NAME','file_name'])
 
-#file_name = args["file_name"]
+file_name = args["file_name"]
 
 conf = SparkConf()
 
@@ -30,7 +30,7 @@ job = Job(glueContext)
 
 job.init(args['JOB_NAME'], args)
 
-input_file_path = "s3://troy-dwh-external/user_behavior/2016_funnel.csv"
+input_file_path = "s3://troy-dwh-external/user_behavior/" + file_name
 
 df = spark.read.option("header","true")\
 	.option("inferSchema","true")\
