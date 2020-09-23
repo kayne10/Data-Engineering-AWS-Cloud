@@ -1,7 +1,7 @@
 create external schema dwh_external_data_spectrum from data catalog 
 database 'ecommerce_external_data' 
-iam_role 'YOUR_ARN' 
-region 'eu-west-1';
+iam_role 'arn:aws:iam::387932593219:role/myredshift' 
+region 'us-west-2';
 
 
 create external table dwh_external_data_spectrum.user_data_file(
@@ -15,5 +15,5 @@ create external table dwh_external_data_spectrum.user_data_file(
 row format delimited
 fields terminated by ','
 stored as textfile 
-location 's3://BUCKET_NAME/user_behaviour/'
+location 's3://troy-dwh-external/user_behaviour/'
 table properties ('skip.header.line.count'='1')
