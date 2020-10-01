@@ -27,7 +27,7 @@ job = Job(glueContext)
 
 job.init(args['JOB_NAME'], args)
 
-input_file_path = "s3://troy-dwh-external/user_behaviour/2016_funnel.csv"
+input_file_path = "s3://troy-dwh-external/user_behavior/2016_funnel.csv"
 
 df = spark.read.option("header","true")\
 	.option("inferSchema","true")\
@@ -41,11 +41,13 @@ df = df.withColumn('event_timestamp',f.to_timestamp('event_timestamp',format='MM
 df= df.withColumn('year',f.year(f.col('event_timestamp')))\
 	.withColumn('month',f.month(f.col('event_timestamp')))
 
-
+#glue makes pyspark dataframe into a dynamic dataframe
 dynamic_df = DynamicFrame.fromDF(df, glueContext, "dynamic_df")
-
+# use ResolveChoice to map the dynamic frame
 mapped_df = ResolveChoice.apply(frame = dynamic_df, choice = "make_cols",transformation_ctx = "mapped_df")
-
-datasink = glueContext.write_dynamic_frame.from_jdbc_conf(frame = mapped_df, catalog_connection = "redshift-1", connection_options = {"dbtable": "external_data_schema.user_behaviour", "database": "dev"}, redshift_tmp_dir = args["TempDir"], transformation_ctx = "datasink")
+#insert into redshift
+datasink = glueContext.write_dynamic_frame.from_jdbc_conf(frame = mapped_df, catalog_connection = "troy-redshift-cluster-1",
+														connection_options = {"dbtable": "external_data_schema.user_behaviour", "database": "dev"},
+														redshift_tmp_dir = args["TempDir"], transformation_ctx = "datasink")
 
 job.commit()

@@ -5,8 +5,8 @@ from awsglue.job import Job
 import boto3 ,json,sys
 
 
-secret_name = 'your-rds-secret-name'
-region_name ='eu-west-1'
+secret_name = 'rs-credentials'
+region_name ='us-west-2'
 session = boto3.session.Session()
 client = session.client(service_name='secretsmanager',region_name=region_name)
 get_secret_value_response = client.get_secret_value(SecretId=secret_name)
@@ -18,7 +18,7 @@ host = creds['host']
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 partition_by_cols=["year","month"]
-output_dir_path="s3://bucket-name/orders_data_pyspark"
+output_dir_path="s3://troy-dwh-external/orders_data_pyspark"
 
 sc = SparkContext()
 glueContext = GlueContext(sc)
